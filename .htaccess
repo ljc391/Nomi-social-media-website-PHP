@@ -1,0 +1,9 @@
+RewriteEngine  on
+
+RewriteRule ^api/1/User$ apiVersionOne/User.php
+RewriteRule ^api/1/User/([0-9]+)$ apiVersionOne/User.php?u_id=$1
+
+RewriteRule ^api/2/User$ apiVersionTwo/User.php
+RewriteRule ^api/2/User/([0-9]+)$ apiVersionTwo/User.php?u_id=$1
+
+RewriteRule ^content-([0-9]+)$ SingleContent.php?c_id=$1
