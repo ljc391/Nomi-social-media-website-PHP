@@ -1,34 +1,116 @@
 @media (max-width: 480px) {
 
+  .navbar{
+    display: -webkit-flex;
+    display: flex;
+  }
+  .Homepic h1{
+    font-size: 25px;
+  }
+  .navbar{
+    display: -webkit-flex;
+    display: flex;
+  }
 
+.imgcontainer {
+  margin-top: 50px;
+}
+  .imgcontainer h1{
+  }
+  .imgcontainer a{
+    font-size: 25px;
+
+  }
+  .imgcontainer p{
+    font-size: 20px;
+  }
 
 
 }
 @media (min-width: 481px) and (max-width: 767px) {
 
+  .Homepic h1{
+
+    font-size: 30px;
+  }
+  .navbar{
+    display: -webkit-flex;
+    display: flex;
+  }
+   .nomisear{
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  }
+  .imgcontainer {
+    margin-top: 50px;
+  }
 
 }
 
 @media (min-width: 768px) and (max-width: 979px) {
+  .navbar{
+    display: -webkit-flex;
+    display: flex;
+  }
+  .Homepic h1{
+
+    font-size: 35px;
+  }
+   .nomisear{
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  }
+    .imgcontainer {
+    margin-top: 50px;
+  }
 
 
 }
 
 @media (min-width: 980px) {
+  .navbar{
+    display: -webkit-flex;
+    display: flex;
+  }
+  .Homepic h1{
+    font-size: 40px;
+  }
+  .nomibtn{
+
+  }
+  .nomiimg{
+
+  }
+  .nomisear{
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  }
+  .imgcontainer {
+  margin-top: 20px;
+}
 
 
 
 }
-.Homepic {
-  width: 100%;
-  background-image: url("../image/nomihp1.jpg");
-  background-size: 100% 100%;
-}
 
+  .Homepic {
+
+
+    background-image: url("../image/nomihp1.jpg");
+  }
 .Homepic h1{
-  font-size: 50px;
   font-weight: bold;
 
+  margin-top: 100px;
   font-family: "Lucida Grande", Tahoma;
 }
 
@@ -149,7 +231,6 @@
 }
 
 .imgcontainer {
-  margin-top: 20px;
   overflow: hidden;
   max-width: 100%;
   width: 500px;

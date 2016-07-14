@@ -6,7 +6,7 @@ if (isset($_SESSION['u_id'])) header("Location: index.php") ;
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Nomi in the House~</title> 
+	<title>Nomi in the House~</title>
 	<?php include('_headCommon.php');?>
 	<style type="text/css">
 	.forsignup{
@@ -14,12 +14,12 @@ if (isset($_SESSION['u_id'])) header("Location: index.php") ;
 	}
 	</style>
 
-</head> 
+</head>
 <body>
-	<div class="container-fluid Homepic"  align="center">   
-		
-		<h1>Nomi in the House</h1> 
-		<div class = "createform"> 
+	<div class="container-fluid Homepic"  align="center">
+
+		<h1>Nomi in the House</h1>
+		<div class = "createform">
 			    <input type="text" class="form-control" name="userid" id = "userid"placeholder="ID">
 			    <span class="error"><?php echo $useridErr;?></span>
 
@@ -37,40 +37,41 @@ if (isset($_SESSION['u_id'])) header("Location: index.php") ;
 
 				<button type="submit" class="btn btn-warning forsignin" id = "signin">Sign In</button>
 				<button type="submit" class="btn btn-warning forsignup" id = "signup">Sign Up</button>
-				
+
 				<div class="row">
-					<div class="col-sm-6">
-						<a href="#guest" role="button">Visit as a guest</a> 
+					<div class="col-sm-6" text-align="center">
+						<a href="#guest" role="button">Visit as a guest</a>
 					</div>
-					<div class="col-sm-6">
-						<a href="#createAccount" class="forsignin" role="button">Create account</a> 
-						<a href="#signIn" class="forsignup" role="button">Already have account</a> 
+					<div class="col-sm-6" text-align="center">
+						<a href="#createAccount" class="forsignin" role="button">Create account</a>
+						<a href="#signIn" class="forsignup" role="button">Already have account</a>
 					</div>
 				</div>
 			<!--/form-->
-			
+
 		</div>
 
-	 
+
 	</div>
- 	
+
 	<?php include('_footer.php');?>
 	<?php include('_scripts.php');?>
 
 	<script type="text/javascript">
-	$(function(){  
+	$(function(){
 
- 	
+
 		//home pic size
 		var $w = $( document ).width();
 		var $r = $w/1275;
 		var $h = $r*700;
-		$('.Homepic').css({height:$h+'px'});
+		var $h2 = $( document ).height()-30;
+		$('.Homepic').css({height:$h2+'px'});
 
 
 	});
 
 	</script>
- 
+
 </body>
 </html>
