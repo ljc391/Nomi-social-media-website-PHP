@@ -151,6 +151,7 @@
 .imgcontainer {
   margin-top: 20px;
   overflow: hidden;
+  max-width: 100%;
   width: 500px;
 
     border-style: solid;
