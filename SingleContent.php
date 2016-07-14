@@ -1,29 +1,29 @@
-<?php   
-    include("mysql_connect.php"); 
+<?php
+    include("mysql_connect.php");
     session_start();
     if (!isset($_SESSION['u_id'])) header("Location: login.php") ;
 
-    $u_id = $_SESSION['u_id']; 
-    $u_name = $_SESSION['u_name']; 
+    $u_id = $_SESSION['u_id'];
+    $u_name = $_SESSION['u_name'];
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Nomi in the House~</title> 
+    <title>Nomi in the House~</title>
     <?php include('_headCommon.php');?>
-</head> 
+</head>
 <body>
 <?php
 if (isset($_GET['c_id'])){
     $c_id = $_GET['c_id'];
- 
+
 
     $query = "SELECT content.c_title, content.c_text, content.c_image, LKS.l_date
                 FROM content
                 LEFT JOIN (SELECT * FROM likes WHERE u_id = '$u_id') LKS
                 ON content.c_id=LKS.c_id
                 WHERE content.c_id = ?";
-        
+
     if ($stmt = $mysqli->prepare($query)) {
         $stmt->bind_param("s", $c_id);
         $stmt->execute();
@@ -32,34 +32,34 @@ if (isset($_GET['c_id'])){
         $stmt->close();
         if ($title){
             ?>
-        
-        <div class = "container-fluid singlecontent" align = "center"> 
+
+        <div class = "container-fluid singlecontent" align = "center">
 
             <h1><?php echo($title)?></h1>
-            <img src="<?php echo($image)?>" width = "500px"> 
-            <p><?php echo($text)?></p> 
+            <img src="<?php echo($image)?>" id = "pics" >
+            <p><?php echo($text)?></p>
             <span>
                 <?php
-                        if($l_date){ 
+                        if($l_date){
                     ?>
                             <a href="#likeContent" data-postId="<?php echo($c_id); ?>" > <img id ="like" src="image/like.png" width ="40px"></a>
 
                     <?php
 
-                        }else{  
+                        }else{
                     ?>
                             <a href="#likeContent" data-postId="<?php echo($c_id); ?>" > <img id ="like" src="image/dlike.png" width ="40px"></a>
                     <?php
 
                         }
 
-                    ?> 
+                    ?>
             </span>
             <div class="modal-body">
 
               <ul class = "list-group  pcc" data-postId="0">
                  <li id = "fcom" data-postId="<?php echo($c_id); ?>" class="list-group-item">Show comments...</li>
-                  
+
 
               </ul>
                 <input type="text" class="form-control " name = "comment" id="postCommentText" placeholder="Comment...">
@@ -69,19 +69,19 @@ if (isset($_GET['c_id'])){
             </div>
 
         </div>
-        
+
         <?php
         }
         $mysqli->close();
     }
 
-        
+
 }else{
     echo('HUH?');
 }
 ?>
 
-    
+
     <?php include('_footer.php');?>
     <?php include('_scripts.php');?>
 </body>

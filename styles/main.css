@@ -24,6 +24,17 @@
   .imgcontainer p{
     font-size: 20px;
   }
+  .singlecontent a{
+
+      font-size: 25px;
+
+  }
+  .singlecontent p{
+
+  font-size: 20px;
+
+
+}
 
 
 }
@@ -96,7 +107,10 @@
   }
   .imgcontainer {
   margin-top: 20px;
-}
+  }
+  .singlecontent p{
+    font-size: 30px;
+  }
 
 
 
@@ -247,29 +261,30 @@
 .imgcontainer a:hover{
   text-decoration: none;
 }
-
-.imgcontainer img{
-  padding-top: 15px;
-  padding-bottom: 15px;
-    width: 100%;
-
-
-
-  }
   .imgcontainer span img{
     width: 40px;
 
-  cursor:pointer;
+    cursor:pointer;
 
   }
+.imgcontainer img{
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 100%;
+
+
+
+  }
+
   .singlecontent {
-  width: 500px;
+
+    max-width: 100%;
+    width: 500px;
 
 
 }
 .singlecontent h1{
 
-  font-size: 40px;
   font-weight: bold;
   font-family: "Lucida Grande", Tahoma;
 
@@ -278,12 +293,20 @@
 }
 .singlecontent p{
 
-  font-size: 30px;
   font-family: "Lucida Grande", Tahoma;
 
 
 
 }
+.singlecontent img{
+  width: 100%;
+}
+.singlecontent span img{
+    width: 40px;
+
+    cursor:pointer;
+
+  }
 .footer p{
   margin-top: 40px;
   vertical-align: middle;
