@@ -35,6 +35,21 @@
 
 
 }
+  #page-wrap h2{
+  font-size: 25px;
+  font-weight: bold;
+
+  font-family: "Lucida Grande", Tahoma;
+}
+#page-wrap p{
+
+  font-size: 20px;
+  font-family: "Lucida Grande", Tahoma;
+
+
+
+
+}
 
 
 }
@@ -324,12 +339,17 @@
 }
 
 #page-wrap{
+  max-width: 100%;
   margin-top: 100px;
   margin-bottom: 100px;
   border-radius: 10px 10px 10px 10px;
   -moz-border-radius: 10px 10px 10px 10px;
   -webkit-border-radius: 10px 10px 10px 10px;
   border: 2px solid  #FFCC00;
+
+  width: 600px;
+
+  padding-bottom: 50px;
 }
 #page-wrap h2{
   font-size: 50px;
@@ -346,14 +366,8 @@
 
 
 }
-#chat-wrap                      { border: 1px solid #eee; margin: 0 0 15px 0; }
-#chat-area                      { text-align: left; height: 300px; overflow: auto; border: 0px solid #666; padding: 20px; background: white; }
+#chat-wrap                      { border: 1px solid #eee; margin: 0 0 15px 0;}
+#chat-area                      {  text-align: left; height: 300px; overflow: auto; border: 0px solid #666; padding: 20px; background: white; }
 #chat-area span                 { color: white; background: #333; padding: 4px 8px; -moz-border-radius: 5px; -webkit-border-radius: 8px; margin: 0 5px 0 0; }
 #chat-area p                    { padding: 8px 0; border-bottom: 1px solid #ccc; }
 
-
-#page-wrap{
-  width: 600px;
-
-  padding-bottom: 50px;
-}
