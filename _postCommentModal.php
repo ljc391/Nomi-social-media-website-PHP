@@ -18,7 +18,7 @@
             <span class="error"><?php echo $comErr;?></span>
       </div>
       <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" id = "submitPostComment" value = "cf" data-postId="0" data-uname="<?php echo($u_name); ?>">Post</button>
+            <button type="submit" class="btn btn-primary" id = "submitPostComment" value = "cf" data-postId="0" data-uname="<?php echo($u_name); ?>" data-uid="<?php echo($u_id); ?>">Post</button>
       </div>
     </div>
   </div>

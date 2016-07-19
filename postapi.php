@@ -2,9 +2,9 @@
 include("mysql_connect.php");
 session_start();
  if (isset($_SESSION['u_id'])) $u_id = $_SESSION['u_id'];
- 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
     $message="";
     $success=false;
     $data='';
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $stmt->fetch();
                     $stmt->close();
                     if (!$u_pwd || $u_pwd !== md5($pwd)) {
-                        $message = "Invalid username or password!";       
+                        $message = "Invalid username or password!";
                     } else {
                         $_SESSION['u_id'] = $userid;
 
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         //$data = array('email' => $u_email);
                     }
 
-                    
+
                     $mysqli->close();
                 }
             }
@@ -54,14 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (empty($_POST["userid"])) {
                 $message = "ID is required!";
             } else {
-                $userid = $_POST["userid"]; 
-            } 
-     
+                $userid = $_POST["userid"];
+            }
+
             if (empty($_POST["pwd"])) {
                 $message = "Password is required!";
             } else {
                 $pwd = md5($_POST["pwd"]);
-            } 
+            }
             if (empty($_POST["usern"])) {
                 $message = "User name is required!";
             } else {
@@ -74,34 +74,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             if (empty($_POST["checked"])) {
                // $cheErr = "Need to check it!";
-            }  
-    
+            }
+
             if ((!empty($userid)) && (!empty($pwd)) && (!empty($usern)) && (!empty($email))) {
                 $query = "INSERT INTO user VALUES ('$userid','$pwd','$usern','$email', now());";
-                if (mysqli_query($mysqli, $query)) {   
-                    $_SESSION['u_id'] = $userid; 
-                    $success = true; 
-                    } else {  
+                if (mysqli_query($mysqli, $query)) {
+                    $_SESSION['u_id'] = $userid;
+                    $success = true;
+                    } else {
 
-                        $message = "Invalid username or password!";       
+                        $message = "Invalid username or password!";
                     }
                 $mysqli->close();
-            } 
+            }
 
 
         break;
-        case "postForm": 
+        case "postForm":
             if (empty($_POST["title"])) {
                 $message .= "Title is required!";
             } else {
-                $title = $_POST["title"]; 
+                $title = $_POST["title"];
             }
 
             if (empty($_POST["content"])) {
                 $message .= "Content is required!";
             } else {
-                $content = $_POST["content"]; 
-            } 
+                $content = $_POST["content"];
+            }
 
             if ((!empty($title)) && (!empty($content)) ) {
 
@@ -113,23 +113,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   $stmt3->close();
                 }
                 $query = "INSERT INTO content VALUES ('$i','$title','$content','null');";
-                if (mysqli_query($mysqli, $query)) {    
-                    $success[0] = true; 
-                    } else {  
+                if (mysqli_query($mysqli, $query)) {
+                    $success[0] = true;
+                    } else {
 
-                        $message = "db err!";       
+                        $message = "db err!";
                     }
 
                 $query2 = "INSERT INTO post VALUES ('$u_id','$i',now());";
-                if (mysqli_query($mysqli, $query2)) {    
-                    $success[1] = true; 
-                    } else {  
+                if (mysqli_query($mysqli, $query2)) {
+                    $success[1] = true;
+                    } else {
 
-                        $message = "db err!";       
+                        $message = "db err!";
                     }
                 $mysqli->close();
-            } 
-         
+            }
+
 
 
         break;
@@ -137,37 +137,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (empty($_POST["text"])) {
                 $message = "Comment is required!";
             } else {
-                $text = $_POST["text"]; 
-            }  
+                $text = $_POST["text"];
+            }
             if (empty($_POST["postId"])) {
                 $message = "PostId is required!";
             } else {
-                $postId = $_POST["postId"]; 
-            }  
+                $postId = $_POST["postId"];
+            }
             if (!empty($text)){
                 $query = "INSERT INTO comments VALUES ('$u_id','$postId',now(), '$text');";
-                if (mysqli_query($mysqli, $query)) {   
-                    $success = true;  
+                if (mysqli_query($mysqli, $query)) {
+                    $success = true;
 
-                } else { 
-                                   
-                    $message .=  "Error: " . $sql . "<br>" . mysqli_error($mysqli);       
+                } else {
+
+                    $message .=  "Error: " . $sql . "<br>" . mysqli_error($mysqli);
                 }
-                
-            } 
-            
- 
-    
+
+            }
+
+
+
 
 
         break;
-        case "likeContent": 
+        case "likeContent":
             if (empty($_POST["postId"])) {
                 $message = "PostId is required!";
             } else {
-                $postId = $_POST["postId"]; 
+                $postId = $_POST["postId"];
                 $data .= $postId;
-            } 
+            }
 
 
             if ($stmt = $mysqli->prepare("SELECT l_date FROM likes WHERE c_id = ? AND u_id = ?")) {
@@ -177,26 +177,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->fetch();
                 $stmt->close();
                 if (!$l_date ) {
-                    $message .= "no result insert";    
+                    $message .= "no result insert";
                     $query = "INSERT INTO likes VALUES ('$u_id','$postId',now());";
                     mysqli_query($mysqli, $query);
                     $data ="insert";
-                } else { 
+                } else {
                     $success = true;
-                    $message = "find result delete";   
-                    $message .= $u_id; 
-                    $message .= $postId;    
-                    $query = "DELETE FROM likes WHERE u_id = '$u_id' AND c_id = '$postId'";  
+                    $message = "find result delete";
+                    $message .= $u_id;
+                    $message .= $postId;
+                    $query = "DELETE FROM likes WHERE u_id = '$u_id' AND c_id = '$postId'";
                     mysqli_query($mysqli, $query);
                     $data ="delete";
 
                     //$data = array('email' => $u_email);
                 }
 
-                
+
                 $mysqli->close();
             }
-    
+
 
 
         break;
@@ -215,7 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = array('success' => $success, 'data' => $data, 'message' => $message);
     echo json_encode($response);
 
-    
+
 
 }else{
     echo('POST required');

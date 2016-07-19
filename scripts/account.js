@@ -127,11 +127,11 @@ $(function(){
 
 		$('#submitPostComment').on('click', function(e){
 			e.preventDefault();
-			console.log('click2');
+			//console.log('click2');
 			var postId = $(this).attr('data-postId');
 			var cname = $(this).attr('data-uname');
-			console.log(postId);
-			console.log(cname);
+			//console.log(postId);
+			//console.log(cname);
 			var text = $('#postCommentText').val();
 			$('.ppc').attr('data-postId', postId);
 			$('#postCommentText').val('');
@@ -159,7 +159,7 @@ $(function(){
 						var $li = $('<li>').addClass('list-group-item').html(res);
 						$('.pcc').append($li) ;
 						$(this).attr('data-postId','0');
-
+						notifyuser(postId);
 						//$('#postCommentModal').modal('hide');
 
 					}else{
@@ -169,6 +169,43 @@ $(function(){
 				}
 
 			});
+		}
+		function notifyuser(postId){
+
+			$.ajax({
+				type: "GET",
+		        url:'./getapi.php',
+				data:{
+					action:'notifyUser',
+					postId:postId
+				},
+				dataType:'json',
+				success: function(response){
+					if (response.success){
+						console.log(response.data);
+
+
+				        	var t = "<?php echo($u_id); ?>";
+				        	if(response.data.includes(t)){
+				            	alert("notify!!");
+
+ 							}else{
+ 								console.log("no need to notify")
+ 							}
+
+
+
+
+					}else{
+						console.log("success error");
+					}
+				},
+				error: function(response){
+					console.log(response);
+				}
+
+			});
+			setTimeout('notifyuser(postId)', 15000); // Every 15 seconds.
 		}
 
 		$('a[href="#likeContent"]').on('click', function(e){
