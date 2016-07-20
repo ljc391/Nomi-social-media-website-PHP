@@ -135,48 +135,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
         break;
 
-         case "notifyUser":
-
-            $postId = $_GET["postId"];
-
-
-            $query = "SELECT u_id FROM (SELECT distinct u_id FROM comments WHERE c_id = ? union SELECT distinct u_id FROM likes WHERE c_id = ?) lusers Where u_id != ?";
-            if ($stmt = $mysqli->prepare($query)) {
-                $stmt->bind_param("sss", $postId, $postId, $u_id);
-                $stmt->execute();
-                $stmt->bind_result($users);
-                if (!$stmt->fetch()) {
-                  //  $success = true;
-
-                    $message .= $postId;
-                    $message .= $u_id;
-                    $message .= ' no results!';
-                    echo "<p>no recently posts</p>";
-                }else{
-                    $success = true;
-                    $i = 0;
-                    $data[$i] = $users;
-                    $i+=1;
-                     while ($stmt->fetch()) {
-
-                        $data[$i] =$users;
-                        $i+=1;
-
-                     }
-
-                }
-
-                //$mysqli->close();
-            }else{
-                $message .= 'nonodatabase';
-            }
-
-            $response = array('success' => $success, 'data' => $data, 'message' => $message);
-            echo json_encode($response);
-
-
-        break;
-
         default:
             $message="unknown action";
     }

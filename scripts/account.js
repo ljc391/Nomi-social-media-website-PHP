@@ -1,4 +1,7 @@
 $(function(){
+
+	var state;
+	var n_time;
 		$('#postform').on('click', function(e){
 			e.preventDefault();
 			var title = $('#title').val();
@@ -170,34 +173,62 @@ $(function(){
 
 			});
 		}
+
+        var noti =  new Notification();
+        noti.getState();
+
+        setInterval(noti.update, 15000);
+		function Notification () {
+		    this.update = notifyuser;
+			this.getState = getStateOfNotification;
+		}
+		function getStateOfNotification(){
+			$.ajax({
+			   type: "POST",
+			   url: "process_notify.php",
+			   data: {
+			            'function': 'getState'
+			            },
+			   dataType: "json",
+
+			   success: function(data){
+			       n_time = data.n_time;
+			       console.log(n_time);
+			   },
+			});
+		}
 		function notifyuser(postId){
 
 			$.ajax({
-				type: "GET",
-		        url:'./getapi.php',
+				type: "POST",
+		        url:"process_notify.php",
 				data:{
-					action:'notifyUser',
-					postId:postId
+					'function':'notifyUser',
+					postId:postId,
+					n_time:n_time
 				},
 				dataType:'json',
 				success: function(response){
 					if (response.success){
 						console.log(response.data);
 
-
-				        	var t = "<?php echo($u_id); ?>";
-				        	if(response.data.includes(t)){
-				            	alert("notify!!");
-
- 							}else{
- 								console.log("no need to notify")
- 							}
+						//console.log(response.times);
+						noti.getState();
+				        var t = response.data;
+				        //"<?php echo($u_id); ?>";
+				        	//if(response.data.includes(t)){
+				        //alert(t);
 
 
 
+ 							//}else{
+ 							//	console.log("no need to notify")
+ 							//}
+ 						var $li = $('<li>').html(response.data);
+						$('.dropdown-menu').append($li);
 
 					}else{
-						console.log("success error");
+						console.log("no action");
 					}
 				},
 				error: function(response){
@@ -205,7 +236,7 @@ $(function(){
 				}
 
 			});
-			setTimeout('notifyuser(postId)', 15000); // Every 15 seconds.
+			//setTimeout(notifyuser(postId), 15000); // Every 15 seconds.
 		}
 
 		$('a[href="#likeContent"]').on('click', function(e){

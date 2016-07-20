@@ -153,6 +153,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $message .=  "Error: " . $sql . "<br>" . mysqli_error($mysqli);
                 }
+                $query2 = "INSERT INTO notification VALUES ('$postId',now());";
+                if (mysqli_query($mysqli, $query2)) {
+                    $success = true;
+
+                } else {
+
+                    $message .=  "Error: " . $sql . "<br>" . mysqli_error($mysqli);
+                }
 
             }
 
