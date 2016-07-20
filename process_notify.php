@@ -15,15 +15,19 @@ if (isset($_SESSION['u_id'])) $u_id = $_SESSION['u_id']; else $u_id='Guest';
 
          case('getState'):
 
-             if ($stmt = $mysqli->prepare("SELECT n_time FROM notification ORDER BY n_time DESC LIMIT 1")) {
+            // if ($stmt = $mysqli->prepare("SELECT n_time FROM notification ORDER BY n_time DESC LIMIT 1")) {
+            if ($stmt = $mysqli->prepare("SELECT l_time FROM logout WHERE u_id = ?")) {
+                $stmt->bind_param("s", $u_id);
                 $stmt->execute();
                 $stmt->bind_result($n_time);
                 $stmt->fetch();
                 $stmt->close();
-                $log['n_time'] = $n_time;
+                $data = $n_time;
+                $success = true;
             }
 
-            echo json_encode($log);
+            $response = array('success' => $success, 'data' => $data, 'message' => $message, 'times' =>$times);
+            echo json_encode($response);
 
              break;
         case('getUsers'):

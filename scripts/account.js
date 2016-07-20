@@ -174,6 +174,32 @@ $(function(){
 			});
 		}
 
+        setInterval(usertimestamp, 5000);
+		function usertimestamp(){
+			$.ajax({
+				url:'./postapi.php',
+				method:'POST',
+				data:{
+					action:'userTimestamp'
+				},
+				dataType:'json',
+				success: function(response){
+					if (response.success){
+						console.log("success update time");
+
+
+					}else{
+						//console.log("e1");
+						//console.log(response);
+					}
+				},
+				error: function(){
+					//console.log("e2");
+				}
+
+			});
+		}
+
         var noti =  new Notification();
         noti.getState();
 
@@ -191,8 +217,8 @@ $(function(){
 			            },
 			   dataType: "json",
 
-			   success: function(data){
-			       n_time = data.n_time;
+			   success: function(response){
+			       n_time = response.data;
 			       console.log(n_time);
 			   },
 			});
@@ -215,6 +241,7 @@ $(function(){
 						//console.log(response.times);
 						noti.getState();
 				        var t = response.data;
+				       // console.log(t);
 				        //"<?php echo($u_id); ?>";
 				        	//if(response.data.includes(t)){
 				        //alert(t);
@@ -224,20 +251,32 @@ $(function(){
  							//}else{
  							//	console.log("no need to notify")
  							//}
- 						var $li = $('<li>').html(response.data);
-						$('.dropdown-menu').append($li);
+ 						var len = response.data.length;
+
+				        for(var i=0;i<len;i++ ){
+				        	var txt = "content-" + response.data[i];
+ 						//console.log(txt);
+ 							var $li = $('<li>').addClass('noti').append($('<a>').attr('href',txt).append(txt));
+							$('.dropdown-menu').append($li);
+
+				        }
+
+
 
 					}else{
 						console.log("no action");
 					}
 				},
 				error: function(response){
-					console.log(response);
+					//console.log(response);
 				}
 
 			});
 			//setTimeout(notifyuser(postId), 15000); // Every 15 seconds.
 		}
+		$('.noti').click(function(){
+			$(this).remove();
+		});
 
 		$('a[href="#likeContent"]').on('click', function(e){
 			e.preventDefault();

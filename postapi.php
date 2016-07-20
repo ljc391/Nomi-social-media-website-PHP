@@ -212,6 +212,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             unset($_SESSION['u_id']);
             $success=true;
         break;
+        case "userTimestamp":
+
+
+                if ($stmt = $mysqli->prepare("SELECT COUNT(u_id) FROM logout   WHERE u_id =?")) {
+
+
+                $stmt->bind_param("s", $u_id);
+                $stmt->execute();
+                $stmt->bind_result($count);
+                $stmt->fetch();
+                $stmt->close();
+                $message .= $count;
+
+
+                    if($count>0){
+                        $query = "UPDATE logout SET l_time = now() WHERE u_id = '$u_id'";
+
+                        if (mysqli_query($mysqli, $query)) {
+                            $success = true;
+                            $message = "time store";
+                        } else {
+
+                            $message .=  "Error: " . $sql . "<br>" . mysqli_error($mysqli);
+                        }
+
+                    }else{
+                        $query = "INSERT INTO logout VALUES ('$u_id',now())";
+                        if (mysqli_query($mysqli, $query)) {
+                            $success = true;
+                            $message = "time store";
+                        } else {
+
+                            $message .=  "Error: " . $sql . "<br>" . mysqli_error($mysqli);
+                        }
+
+
+                    }
+
+
+                $mysqli->close();
+                }
+
+
+
+
+        break;
+
         default:
             $message="unknown action";
     }
