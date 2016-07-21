@@ -24,18 +24,18 @@ $(function(){
 				success: function(response){
 					if (response.success){
 
-						console.log(response.success);
-						console.log(response.message);
+						//console.log(response.success);
+						//console.log(response.message);
 					}else{
 
-						console.log("err");
+						//console.log("err");
 
 						alert(response.message);
 					}
 				},
 				error: function(response){
-					console.log("errs");
-					console.log(response.message);
+					//console.log("errs");
+					//console.log(response.message);
 				}
 
 			});
@@ -77,7 +77,7 @@ $(function(){
 
 
 		$('a[href="#postComment"]').on('click', function(e){
-			console.log('click');
+			//console.log('click');
 			e.preventDefault();
 			var postId = $(this).attr('data-postId');
 			$('#submitPostComment').attr('data-postId', postId);
@@ -116,7 +116,7 @@ $(function(){
 
 
 					}else{
-						console.log(response.message);
+						//console.log(response.message);
 					}
 				},
 				error: function(){
@@ -155,11 +155,11 @@ $(function(){
 				dataType:'json',
 				success: function(response){
 					if (response.success){
-						console.log("success");
+						//console.log("success");
 
 						var res = cname + " : " + text;
 
-						console.log(response.data);
+						//console.log(response.data);
 						var $li = $('<li>').addClass('list-group-item').html(res);
 						$('.pcc').append($li) ;
 						$(this).attr('data-postId','0');
@@ -186,7 +186,7 @@ $(function(){
 				dataType:'json',
 				success: function(response){
 					if (response.success){
-						console.log("success update time");
+						//console.log("success update time");
 
 
 					}else{
@@ -212,8 +212,9 @@ $(function(){
 				dataType:'json',
 				success: function(response){
 					if (response.success){
-						console.log("success update R time");
-						console.log(response.r_time);
+						//
+						//console.log("success update R time");
+						//console.log(response.r_time);
 						r_time = response.r_time;
 						$('li.noti').remove();
 						$('#navimg').attr("src","image/edit.png");
@@ -271,7 +272,7 @@ $(function(){
 		function notifyuser(postId){
 
 			$('li.noti').remove();
-			console.log('---',n_time, r_time);
+			//console.log('---',n_time, r_time);
 			$.ajax({
 				type: "POST",
 		        url:"process_notify.php",
@@ -284,7 +285,7 @@ $(function(){
 				dataType:'json',
 				success: function(response){
 					if (response.success){
-						console.log(response.data);
+						//console.log(response.data);
 
 						//console.log(response.times);
 						//getStateOfNotification();
@@ -347,16 +348,16 @@ $(function(){
 				dataType:'json',
 				success: function(response){
 					if (response.success){
-						console.log("ulike");
-						console.log(response.data);
-						console.log(response.message);
+						//console.log("ulike");
+						//console.log(response.data);
+						//console.log(response.message);
 						var images = $this.find('img');
 					    images.attr('src','image/dlike.png');
 
 					}else{
-						console.log("like");
-						console.log(response.data);
-						console.log(response.message);
+						//console.log("like");
+						//console.log(response.data);
+						//console.log(response.message);
 						var images = $this.find('img');
 					    images.attr('src','image/like.png');
 
@@ -365,7 +366,7 @@ $(function(){
 					}
 				},
 				error: function(response){
-						console.log("error22");
+						//console.log("error22");
 				}
 
 			});
@@ -374,7 +375,7 @@ $(function(){
 
 		$('a[href="#content-4"]').on('click', function(e){
 			e.preventDefault();
-			console.log('click');
+			//console.log('click');
 			$this = $(this);
 
 			var postId = $(this).attr('data-postId');
@@ -403,10 +404,10 @@ $(function(){
 				dataType:'json',
 				success: function(response){
 					if (response.success){
-						console.log("success");
+						//console.log("success");
 
 
-						console.log(response.data);
+						//console.log(response.data);
 						var $li = $('<li>').addClass('list-group-item').html(text);
 						$('.pcc').append($li) ;
 						$(this).attr('data-postId','0');
@@ -449,7 +450,7 @@ $(function(){
 		});
 
 		function populateLis(that){
-			console.log("inputbox!!");
+			//console.log("inputbox!!");
 			value = $(that).val();
 	        if (value.length >= 1 ) {
 	            if (searchRequest != null)
@@ -468,7 +469,7 @@ $(function(){
 		                    //Receiving the result of search here
 		                    if (response.success){
 
-			                	console.log("success");
+			                	//console.log("success");
 	 							$('#searchresult>li').remove();
 
 								var len = response.data.length;
@@ -476,7 +477,7 @@ $(function(){
 								var $searchresult = $('#searchresult');
 
 						        for(var i=0;i<len;i++ ){
-						            console.log(response.data[i]);
+						            //console.log(response.data[i]);
 						            var $a = $('<a>').html(response.data[i]);
 						            var cont = "content-"+response.ids[i];
 						            $a.attr('href',cont);
@@ -490,16 +491,16 @@ $(function(){
 							}else{
 
 	 							$('#searchresult>li').remove();
-								console.log("non");
-								console.log(response.data);
+								//console.log("non");
+								//console.log(response.data);
 								var $li = $('<li>').addClass("list-group-item").html(response.data);
 						        $('#searchresult').append($li);
 							}
 
 		                },
 		                error: function(response){
-		                	console.log("error");
-		                	console.log(response);
+		                	//console.log("error");
+		                	//console.log(response);
 		                }
 	            	});
 	        }
@@ -520,14 +521,14 @@ $(function(){
 	$('#fcom').on('click', function(e){
 			e.preventDefault();
 			var postId = $(this).attr('data-postId');
-			console.log('click');
+			//console.log('click');
 			loadPostComment(postId);
 
 
 		});
 	$('a[href="#message"]').on('click',function(e){
 		e.preventDefault();
-		console.log("msg page");
+		//console.log("msg page");
 
 		var mtime = new Date().getTime();
 
