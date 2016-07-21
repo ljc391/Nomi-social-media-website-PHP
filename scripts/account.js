@@ -2,6 +2,7 @@ $(function(){
 
 	var state;
 	var n_time;
+	var r_time;
 		$('#postform').on('click', function(e){
 			e.preventDefault();
 			var title = $('#title').val();
@@ -199,15 +200,48 @@ $(function(){
 
 			});
 		}
+		function updatertime(){
+			//alert('u clicked me');
 
-        var noti =  new Notification();
-        noti.getState();
+			$.ajax({
+				url:'./process_notify.php',
+				method:'POST',
+				data:{
+					function:'updateRtime'
+				},
+				dataType:'json',
+				success: function(response){
+					if (response.success){
+						console.log("success update R time");
+						console.log(response.r_time);
+						r_time = response.r_time;
+						$('li.noti').remove();
+						$('#navimg').attr("src","image/edit.png");
 
-        setInterval(noti.update, 15000);
+					}else{
+						//console.log("e1");
+						//console.log(response);
+					}
+				},
+				error: function(){
+					//console.log("e2");
+				}
+
+			});
+
+		}
+
+/*
+		var noti =  new Notification();
 		function Notification () {
 		    this.update = notifyuser;
-			this.getState = getStateOfNotification;
+			//this.getState = getStateOfNotification;
 		}
+*/
+
+
+		var notifyUserTimer = null;
+
 		function getStateOfNotification(){
 			$.ajax({
 			   type: "POST",
@@ -218,20 +252,34 @@ $(function(){
 			   dataType: "json",
 
 			   success: function(response){
-			       n_time = response.data;
-			       console.log(n_time);
+			       n_time = response.n_time;
+			       r_time = response.r_time;
+
+
+			       notifyuser();
+
+			       if (notifyUserTimer==null) notifyUserTimer = setInterval(notifyuser, 15000);
+
 			   },
 			});
 		}
+
+		getStateOfNotification();
+
+
+
 		function notifyuser(postId){
 
+			$('li.noti').remove();
+			console.log('---',n_time, r_time);
 			$.ajax({
 				type: "POST",
 		        url:"process_notify.php",
 				data:{
 					'function':'notifyUser',
 					postId:postId,
-					n_time:n_time
+					n_time:n_time,
+					r_time:r_time
 				},
 				dataType:'json',
 				success: function(response){
@@ -239,27 +287,36 @@ $(function(){
 						console.log(response.data);
 
 						//console.log(response.times);
-						noti.getState();
+						//getStateOfNotification();
 				        var t = response.data;
 				       // console.log(t);
 				        //"<?php echo($u_id); ?>";
 				        	//if(response.data.includes(t)){
 				        //alert(t);
-
-
-
  							//}else{
  							//	console.log("no need to notify")
  							//}
  						var len = response.data.length;
-
-				        for(var i=0;i<len;i++ ){
+ 						if(len>0){
+ 							$('#navimg').attr("src","image/edit2.png");
+ 						}
+ 						for(var i=0;i<len;i++ ){
 				        	var txt = "content-" + response.data[i];
  						//console.log(txt);
  							var $li = $('<li>').addClass('noti').append($('<a>').attr('href',txt).append(txt));
 							$('.dropdown-menu').append($li);
 
 				        }
+				        if (len>0){
+					        var $a = $('<a>').attr('href','#markRead').append('Mark read').on('click', function(e){
+					        	e.preventDefault();
+					        	updatertime();
+					        });
+					        var $li = $('<li>').addClass('noti').append($a);
+								$('.dropdown-menu').append($li);
+						}
+
+
 
 
 
@@ -274,9 +331,7 @@ $(function(){
 			});
 			//setTimeout(notifyuser(postId), 15000); // Every 15 seconds.
 		}
-		$('.noti').click(function(){
-			$(this).remove();
-		});
+
 
 		$('a[href="#likeContent"]').on('click', function(e){
 			e.preventDefault();

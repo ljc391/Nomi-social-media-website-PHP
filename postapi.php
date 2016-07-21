@@ -238,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }
 
                     }else{
-                        $query = "INSERT INTO logout VALUES ('$u_id',now())";
+                        $query = "INSERT INTO logout VALUES ('$u_id',now(), now())";
                         if (mysqli_query($mysqli, $query)) {
                             $success = true;
                             $message = "time store";

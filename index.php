@@ -34,7 +34,7 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right nomibtn">
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"   ><img src="image/edit.png" width = "50px"></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"   ><img id = "navimg" src="image/edit.png" width = "50px"></a>
                   <ul class="dropdown-menu">
                     <li><a  class ="glyphicon glyphicon-log-out" href="#logout"> Logout</a></li>
                     <li><a class = "glyphicon glyphicon-pencil"href="edit.php"> Edit </a></li>
