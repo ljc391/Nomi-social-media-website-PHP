@@ -303,8 +303,8 @@ $(function(){
  						}
  						for(var i=0;i<len;i++ ){
 				        	var txt = "content-" + response.data[i];
- 						//console.log(txt);
- 							var $li = $('<li>').addClass('noti').append($('<a>').attr('href',txt).append(txt));
+ 							console.log(response);
+ 							var $li = $('<li>').addClass('noti').append($('<a>').attr('href',txt).append(response.title[i]));
 							$('.dropdown-menu').append($li);
 
 				        }

@@ -10,6 +10,7 @@ if (isset($_SESSION['u_id'])) $u_id = $_SESSION['u_id']; else $u_id='Guest';
     $success=false;
     $data='';
     $times='';
+    $title='';
 
     switch($function) {
 
@@ -42,16 +43,23 @@ if (isset($_SESSION['u_id'])) $u_id = $_SESSION['u_id']; else $u_id='Guest';
             $n_time = $_POST['n_time'];
             $r_time = $_POST['r_time'];
             $success = true;
-            $query = "SELECT p.c_id, notification.n_time
+
+            $query = "SELECT  a.c_id, content.c_title
+                     FROM (SELECT DISTINCT p.c_id
+                        FROM
+                        (SELECT c_id FROM likes WHERE  u_id = ?
+                        union
+                        SELECT distinct c_id FROM comments  WHERE  u_id = ?) p natural join notification WHERE n_time > ?) a natural join content ";
+            /*$query = "SELECT DISTINCT p.c_id
                         FROM
                         (SELECT c_id FROM likes WHERE  u_id = ?
                         union
                         SELECT distinct c_id FROM comments  WHERE  u_id = ?) p natural join notification WHERE n_time > ? ORDER BY n_time ASC";
-
+            */
            if ($stmt = $mysqli->prepare($query)) {
                 $stmt->bind_param("sss", $u_id, $u_id, $r_time);
                 $stmt->execute();
-                $stmt->bind_result($c_ids, $times);
+                $stmt->bind_result($c_ids, $c_title);
                 if (!$stmt->fetch()) {
                   //  $success = true;
 
@@ -62,12 +70,15 @@ if (isset($_SESSION['u_id'])) $u_id = $_SESSION['u_id']; else $u_id='Guest';
                     $success = true;
                     $i = 0;
                     $data[$i] = $c_ids;
-                    $times[[$i]] = $times;
+                   // $times[[$i]] = $times;
+                    $title[$i] = $c_title;
                     $i+=1;
                      while ($stmt->fetch()) {
 
                         $data[$i] = $c_ids;
-                        $times[[$i]] = $times;
+                        //$times[[$i]] = $times;
+
+                        $title[$i] = $c_title;
                         $i+=1;
 
                      }
@@ -79,7 +90,7 @@ if (isset($_SESSION['u_id'])) $u_id = $_SESSION['u_id']; else $u_id='Guest';
                 $message .= 'nonodatabase';
             }
 
-            $response = array('success' => $success, 'data' => $data, 'message' => $message, 'times' =>$times);
+            $response = array('success' => $success, 'data' => $data,'title' => $title, 'message' => $message);
             echo json_encode($response);
 
 
