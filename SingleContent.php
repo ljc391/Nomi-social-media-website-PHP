@@ -26,6 +26,7 @@ if (isset($_GET['c_id'])){
                 ON content.c_id=LKS.c_id
                 WHERE content.c_id = ?";
 
+
     if ($stmt = $mysqli->prepare($query)) {
         $stmt->bind_param("s", $c_id);
         $stmt->execute();
@@ -79,7 +80,7 @@ if (isset($_GET['c_id'])){
 
 
 }else{
-    echo('HUH?');
+   // echo('HUH?');
 }
 ?>
 

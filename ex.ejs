@@ -1,0 +1,76 @@
+
+// Product
+// City
+// State
+
+// callback hell
+
+app.get('/test', function(req, es){
+    Product.find({}, function(error, products){
+        if (error){
+
+        }else{
+             City.find({}, function(error, cities){
+                if (error){
+
+                }else{
+                    State.find({}, function(error, states){
+                        if (error){
+
+                        }else{
+                            res.render('test',{
+                                products: products,
+                                cities: cities,
+                                states: states
+                            })
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
+
+function getProducts(req, res, next){
+    Product.find({}, function(error, products){
+        if (error){
+
+        }else{
+             req.products: products
+        }
+        next();
+    });
+}
+
+function getCities(req, res, next){
+    City.find({}, function(error, cities){
+        if (error){
+
+        }else{
+             req.cities: cities
+        }
+        next();
+    });
+}
+
+function getStates(req, res, next){
+    State.find({}, function(error, states){
+        if (error){
+
+        }else{
+             req.states: states
+        }
+        next();
+    });
+}
+
+
+app.get('/test', getProducts, getCities, getStates, function(req, res){
+
+    res.render('test',{
+        products: req.products,
+        cities: req.cities,
+        states: req.states
+    })
+
+});
